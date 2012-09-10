@@ -28,3 +28,23 @@ main = print
            maxRatio
            (0, 0, 0.0)
            [(n, phi n, ratio) | n <- [2..1000000], let ratio = fromIntegral n / (fromIntegral (phi n))])
+		   
+-- This is my updated version which uses the ProjecEuler module which I lost on my broken USB drive ;-(
+-- Problem 69
+
+import ProjectEuler
+
+phi :: Integer -> Integer
+phi n = n * product [p - 1 | p <- primeDivisors n] `div` product [p | p <- primeDivisors n]
+
+maxRatio :: (Integer, Integer, Double) -> (Integer, Integer, Double) -> (Integer, Integer, Double)
+maxRatio t1@(_, _, x) t2@(_, _, y)
+  | x > y = t1
+  | otherwise = t2
+
+main = print (foldl
+                maxRatio
+                (0, 0, 0.0)
+                [(n, phi n, ratio) | n <- [2..max], let ratio = fromIntegral n / (fromIntegral (phi n))]
+              )
+    where max = 1000000
