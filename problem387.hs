@@ -37,4 +37,3 @@ isStrongRightTruncHarshadPrime n
   
 main = print (sum (map (\n -> if isStrongRightTruncHarshadPrime n then n else 0) [1..max]))
   where max = 10000
-e

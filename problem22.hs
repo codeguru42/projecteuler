@@ -32,5 +32,6 @@ main = do
     handle <- openFile "input/names.txt" ReadMode 
     contents <- hGetContents handle 
     let names = sort (map (removeChar '"') (split ',' contents)) 
-    print names 
+    let nameScores = zipWith (*) [1..] (map wordScore names)
+    print (sum nameScores)
     hClose handle 
