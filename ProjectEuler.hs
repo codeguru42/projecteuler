@@ -10,7 +10,9 @@ module ProjectEuler
   divides,
   primeDivisors,
   primes,
-  wordScore
+  wordScore,
+  split,
+  removeChar
 ) where
 
 import Data.Char(ord)
@@ -41,3 +43,15 @@ charScore c = fromIntegral (ord c - ord 'A' + 1)
 
 wordScore :: String -> Integer
 wordScore s = sum (map charScore s)
+
+split :: Char -> String -> [String] 
+split _ "" = [] 
+split c s = firstWord : (split c rest) 
+    where firstWord = takeWhile (/=c) s 
+          rest = drop (length firstWord + 1) s 
+
+removeChar :: Char -> String -> String 
+removeChar _ [] = [] 
+removeChar ch (c:cs) 
+    | c == ch   = removeChar ch cs 
+    | otherwise = c:(removeChar ch cs) 

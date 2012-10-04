@@ -6,8 +6,8 @@
 
 -- Problem 42
 
-import Data.Char (ord)
-import Data.Char (toUpper)
+import System.IO (openFile, hGetContents, hClose, IOMode(ReadMode))
+import ProjectEuler (wordScore, split, removeChar)
 
 triangle :: Integer -> Integer
 triangle n = n * (n + 1) `div` 2
@@ -19,14 +19,13 @@ isTriangleNumber k = (discriminant >= 0)
   where discriminant = 1 + 8 * k
 
 isSquare :: Integer -> Bool
-isSquare k = (round .  sqrt . fromInteger $ k) ^ 2 == k
+isSquare k = (k >= 0) && (round .  sqrt . fromIntegral $ k) ^ 2 == k
 
 isTriangleWord :: String -> Bool
-isTriangleWord = isTriangleNumber . wordValue
-
-wordValue :: String -> Integer
-wordValue = sum . (map (\c -> fromIntegral (ord . toUpper $ c) - fromIntegral (ord 'A') + 1))
+isTriangleWord = isTriangleNumber . wordScore
 
 main = do
-  print (wordValue "SKY")
-  print (isTriangleWord "SKY")
+    handle <- openFile "input/words.txt" ReadMode
+    contents <- hGetContents handle
+    print (length (filter isTriangleWord (map (removeChar '"') (split ',' contents))))
+    hClose handle

@@ -8,19 +8,7 @@
 
 import System.IO(openFile, hGetContents, hClose, IOMode(ReadMode))
 import Data.List(sort)
-import ProjectEuler(wordScore)
-
-split :: Char -> String -> [String] 
-split _ "" = [] 
-split c s = firstWord : (split c rest) 
-    where firstWord = takeWhile (/=c) s 
-          rest = drop (length firstWord + 1) s 
-
-removeChar :: Char -> String -> String 
-removeChar _ [] = [] 
-removeChar ch (c:cs) 
-    | c == ch   = removeChar ch cs 
-    | otherwise = c:(removeChar ch cs) 
+import ProjectEuler(wordScore, split, removeChar)
 
 main = do 
     handle <- openFile "input/names.txt" ReadMode 
