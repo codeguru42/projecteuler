@@ -6,9 +6,9 @@
 
 -- Problem 22
 
-import Data.Char
-import System.IO
-import Data.List
+import System.IO(openFile, hGetContents, hClose, IOMode(ReadMode))
+import Data.List(sort)
+import ProjectEuler(wordScore)
 
 split :: Char -> String -> [String] 
 split _ "" = [] 
@@ -21,12 +21,6 @@ removeChar _ [] = []
 removeChar ch (c:cs) 
     | c == ch   = removeChar ch cs 
     | otherwise = c:(removeChar ch cs) 
-
-charScore :: Char -> Integer
-charScore c = fromIntegral (ord c - ord 'A' + 1)
-
-wordScore :: String -> Integer
-wordScore s = sum (map charScore s)
 
 main = do 
     handle <- openFile "input/names.txt" ReadMode 

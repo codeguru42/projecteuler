@@ -9,8 +9,11 @@ module ProjectEuler
   divisors,
   divides,
   primeDivisors,
-  primes
+  primes,
+  wordScore
 ) where
+
+import Data.Char(ord)
 
 isPrime :: Integer -> Bool
 isPrime 1 = False
@@ -32,3 +35,9 @@ primeDivisors n = filter isPrime (divisors n)
 
 primes :: [Integer]
 primes = filter isPrime [2..]
+
+charScore :: Char -> Integer
+charScore c = fromIntegral (ord c - ord 'A' + 1)
+
+wordScore :: String -> Integer
+wordScore s = sum (map charScore s)
