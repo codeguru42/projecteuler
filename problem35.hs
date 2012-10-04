@@ -18,6 +18,11 @@ rotateAll xs = take (length xs) (iterate rotate xs)
 digitsToInteger :: [Integer] -> Integer
 digitsToInteger ns = sum (zipWith (\n p -> n * 10 ^ p) ns [0..])
 
+digits :: Integer -> [Integer]
+digits n 
+    | abs n < 10 = [n]
+    | otherwise = (n `div` 10) : digits (n `mod` 10)
+
 main = do
     print (length (filter (==True) (map (all isPrime) (map (map digitsToInteger) (map rotateAll (map digits (takeWhile (<n) primes)))))))
     where n = 1000000
