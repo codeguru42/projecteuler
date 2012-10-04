@@ -6,7 +6,10 @@
 
 -- Problem 1
 
+sumN :: Integral a => a -> a
 sumN n = n * (n + 1) `div` 2
+
+sumMultiples :: Integral a => a -> a -> a
 sumMultiples n m = m * sumN (n `div` m)
 
 main = do {
