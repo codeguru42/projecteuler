@@ -6,6 +6,8 @@
 
 -- Problem 60
 
+import ProjectEuler (primes)
+
 concatInts :: Integer -> Integer -> Integer
 concatInts n m = n * (10 ^ countDigits m) + m
 
@@ -31,15 +33,6 @@ comb xs@(x:xs') n
 
 isConcatPrime :: Integer -> Integer -> Bool
 isConcatPrime m n = isPrime (concatInts m n)
-
-primes :: [Integer]
-primes = primes' [2..]
- 
-primes' :: [Integer] -> [Integer]
-primes' [] = []
-primes' (p:ps) = p:(primes' [p' | p' <- ps, not (p' `isMultiple` p)])
- 
-a `isMultiple` b = (a `mod` b) == 0
 
 main = print (map (flip comb 2) (comb (takeWhile (<maxPrime) primes) 5))
   where maxPrime = 10000
