@@ -6,7 +6,7 @@
 
 -- Problem 35
 
-import ProjectEuler
+import ProjectEuler (primes)
 
 rotate :: [a] -> [a]
 rotate [] = []
@@ -23,6 +23,7 @@ digits n
     | abs n < 10 = [n]
     | otherwise = (n `div` 10) : digits (n `mod` 10)
 
+-- TODO Takes too long
 main = do
     print (length (filter (==True) (map (all isPrime) (map (map digitsToInteger) (map rotateAll (map digits (takeWhile (<n) primes)))))))
     where n = 1000000

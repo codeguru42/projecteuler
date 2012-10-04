@@ -6,9 +6,9 @@
 
 -- Problem 47
 
-import Data.List
-import ProjectEuler
+import ProjectEuler (primeDivisors)
 
+-- TODO Takes too long
 main = do
     print (fst (head (filter (\(n, ds) -> (all (==consecutiveCount) ds))
           (zip ns (map (map length) (map (map primeDivisors) consecutives))))))
