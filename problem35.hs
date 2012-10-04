@@ -6,7 +6,7 @@
 
 -- Problem 35
 
-import ProjectEuler (primes)
+import ProjectEuler (primes, isPrime, digits)
 
 rotate :: [a] -> [a]
 rotate [] = []
@@ -17,11 +17,6 @@ rotateAll xs = take (length xs) (iterate rotate xs)
 
 digitsToInteger :: [Integer] -> Integer
 digitsToInteger ns = sum (zipWith (\n p -> n * 10 ^ p) ns [0..])
-
-digits :: Integer -> [Integer]
-digits n 
-    | abs n < 10 = [n]
-    | otherwise = (n `div` 10) : digits (n `mod` 10)
 
 -- TODO Takes too long
 main = do

@@ -12,7 +12,8 @@ module ProjectEuler
   primes,
   wordScore,
   split,
-  removeChar
+  removeChar,
+  digits
 ) where
 
 import Data.Char(ord)
@@ -55,3 +56,8 @@ removeChar _ [] = []
 removeChar ch (c:cs) 
     | c == ch   = removeChar ch cs 
     | otherwise = c:(removeChar ch cs) 
+
+digits :: Integer -> [Integer]
+digits n 
+    | abs n < 10 = [n]
+    | otherwise = (n `mod` 10) : (digits (n `div` 10))

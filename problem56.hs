@@ -6,9 +6,11 @@
 
 -- Problem 56
 
-digitSum n
-  | n < 0 = error "sumDigits does not accept negative numbers"
-  | n < 10 = n
-  | otherwise = (n `mod` 10) + digitSum (n `div` 10)
+import ProjectEuler (digits)
+
+digitSum :: Integer -> Integer
+digitSum = sum . digits
   
-main = print (maximum [digitSum (a ^ b) | a <- [1..100], b <- [1..100]])
+main = print (maximum (map digitSum ns))
+    where max = 100
+          ns = [(a ^ b) | a <- [1..max], b <- [1..max]]
