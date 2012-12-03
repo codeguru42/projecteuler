@@ -14,6 +14,7 @@ module ProjectEuler
   split,
   removeChar,
   digits
+  phi
 ) where
 
 import Data.Char(ord)
@@ -61,3 +62,6 @@ digits :: Integer -> [Integer]
 digits n 
     | abs n < 10 = [n]
     | otherwise = (n `mod` 10) : (digits (n `div` 10))
+
+phi :: Integer -> Integer
+phi n = n * product [p - 1 | p <- primeDivisors n] `div` product [p | p <- primeDivisors n]
