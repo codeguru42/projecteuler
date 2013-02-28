@@ -176,17 +176,17 @@ isStraight hand = and (map
   where sortedFaceValues = sort (faceValues hand)
 
 isThreeOfAKind :: [Card] -> Bool
-isThreeOfAKind hand = or (map ((==3) . snd) (count hand))
+isThreeOfAKind hand = or (map ((==3) . snd) ((count . faceValues) hand))
 
 isTwoPairs :: [Card] -> Bool
 isTwoPairs hand = or (map
                       (\(n, m) -> n==2 && m==2)
-                      (count (map snd (count hand))))
+                      (count (map snd ((count . faceValues) hand))))
 
 isOnePair :: [Card] -> Bool
 isOnePair hand = or (map
                      (\(n, m) -> n==2 && m==1)
-                     (count (map snd (count hand))))
+                     (count (map snd ((count . faceValues) hand))))
 
 highCard :: [Card] -> Card
 highCard = maximumBy (\c1 c2 -> compare (faceValue c1) (faceValue c2))
