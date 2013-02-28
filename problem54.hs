@@ -200,10 +200,6 @@ count (x:xs)
                   (count xs)
   | otherwise = (x, 1) : (count xs)
 
---filterRank :: Rank -> [((Rank, Rank), Integer)] -> [((Rank, Rank), Integer)]
---filterRank (Rank ord _) = 
---  filter (\((Rank ord1 _, Rank ord2 _), _) -> ord1 == ord || ord2 == ord)
-
 -- win h1 h2 evaluates to True if h1 is a better hand than h2, False otherwise
 win :: [Card] -> [Card] -> Bool
 win h1 h2 = rank h1 > rank h2
