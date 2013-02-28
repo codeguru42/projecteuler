@@ -143,7 +143,7 @@ rank hand
   | isOnePair hand       = let p = findForCount 2 values
                                vs = allExcept p values
                            in OnePair p vs
-  | otherwise            = HighCard (sortBy compare values)
+  | otherwise            = HighCard (sortBy (flip compare) values)
     where values = faceValues hand
           allExcept v vs = filter (/= v) vs
           findForCount n vs = v
@@ -213,8 +213,7 @@ main = do
     let hands = map (splitAt 5) cards
     let ranks = map (\(h1, h2) -> (rank h1, rank h2)) hands
     let indexedRanks = zip ranks [1..]
+    print (take 5 hands)
     print (take 5 ranks)
-    print (count (suits deck))
-    print (count (faceValues deck))
     print (foldl (\n (r1, r2) -> if r1 > r2 then n + 1 else n) 0 ranks) 
     hClose handle
