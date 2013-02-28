@@ -137,8 +137,8 @@ rank hand
                                vs = allExcept v values
                            in ThreeOfAKind v vs
   | isTwoPairs hand      = let p1 = findForCount 2 values
-                               p2 = findForCount 2 (allExcept p2 values)
-                               v' = head (allExcept p1 (allExcept p2 values))
+                               p2 = findForCount 2 (allExcept p1 values)
+                               v' = head (allExcept p2 (allExcept p1 values))
                            in TwoPairs p1 p2 v'
   | isOnePair hand       = let p = findForCount 2 values
                                vs = allExcept p values
