@@ -156,7 +156,7 @@ isStraightFlush :: [Card] -> Bool
 isStraightFlush hand = isStraight hand && isFlush hand
 
 isFourOfAKind :: [Card] -> Bool
-isFourOfAKind hand = or (map ((==4) . snd) (count hand))
+isFourOfAKind hand = 4 `elem` (map snd ((count . faceValues) hand))
 
 isFullHouse :: [Card] -> Bool
 isFullHouse hand = length valueCounts == 2 &&
