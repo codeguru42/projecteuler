@@ -215,8 +215,9 @@ main = do
     let cards = map (map toCard) rawCards
     let hands = map (splitAt 5) cards
     let ranks = map (\(h1, h2) -> (rank h1, rank h2)) hands
-    let indexedRanks = zip ranks [1..]
+    let wins = map (uncurry win) hands
     print (take 5 hands)
     print (take 5 ranks)
-    print (foldl (\n (r1, r2) -> if r1 > r2 then n + 1 else n) 0 ranks) 
+    print (take 5 wins)
+    print (foldl (\n win -> if win == True then n + 1 else n) 0 wins)
     hClose handle
