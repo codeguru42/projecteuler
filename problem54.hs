@@ -159,7 +159,10 @@ isFourOfAKind :: [Card] -> Bool
 isFourOfAKind hand = or (map ((==4) . snd) (count hand))
 
 isFullHouse :: [Card] -> Bool
-isFullHouse hand = False
+isFullHouse hand = length valueCounts == 2 &&
+                   minimum valueCounts == 2 &&
+                   maximum valueCounts == 3
+  where valueCounts = map snd (count (faceValues hand))
 
 isFlush :: [Card] -> Bool
 isFlush hand = and (map (==firstSuit) handSuits)
