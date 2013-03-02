@@ -11,7 +11,17 @@ import ProjectEuler(split)
 
 type Point = (Double, Double)
 
-data Triangle = Triangle Point Point Point
+x :: Point -> Double
+x = fst
+
+y :: Point -> Double
+y = snd
+
+data Triangle = Triangle {
+  a :: Point,
+  b :: Point,
+  c :: Point
+  } deriving (Show)
 
 stringToInteger :: String -> Integer
 stringToInteger ('-':xs) = -1 * stringToInteger xs
@@ -21,11 +31,15 @@ stringToInteger s = fromIntegral
                     $ map digitToInt 
                     $ reverse s
 
+makePoints :: [Integer] -> [Point]
+makePoints [] = []
+makePoints (x:y:ps) = (fromInteger x, fromInteger y) : makePoints ps
+
 --contains :: Triangle -> Point -> Boolean
 --contains t p = 
 
 main = do
   contents <- readFile "input/triangles.txt"
   let coords = map (map stringToInteger) (map (split ',') (lines contents))
-  let triangles = []
+  let triangles = map (\(a:b:c:[]) -> Triangle a b c) (map makePoints coords)
   print triangles
