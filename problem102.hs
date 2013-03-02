@@ -30,6 +30,9 @@ yCoord l xCoord = m * (xCoord - x p) + y p
   where m = slope l
         p = p1 l
 
+whichSide :: Point -> Line -> Ordering
+whichSide p l = compare (yCoord l (x p)) (y p)
+
 data Triangle = Triangle {
   a :: Point,
   b :: Point,
@@ -48,8 +51,16 @@ makePoints :: [Integer] -> [Point]
 makePoints [] = []
 makePoints (x:y:ps) = (fromInteger x, fromInteger y) : makePoints ps
 
---contains :: Triangle -> Point -> Boolean
---contains t p = 
+contains :: Triangle -> Point -> Bool
+contains t p = whichSide p s1 == whichSide v3 s1
+               && whichSide p s2 == whichSide v1 s2
+               && whichSide p s3 == whichSide v2 s3
+  where s1 = Line v1 v2
+        s2 = Line v2 v3
+        s3 = Line v3 v1
+        v1 = a t
+        v2 = b t
+        v3 = c t
 
 main = do
   contents <- readFile "input/triangles.txt"
