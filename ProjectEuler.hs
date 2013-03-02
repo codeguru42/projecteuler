@@ -13,7 +13,7 @@ module ProjectEuler
   wordScore,
   split,
   removeChar,
-  digits
+  digits,
   phi
 ) where
 
