@@ -6,9 +6,16 @@
 
 -- Problem 102
 
+import ProjectEuler(split)
+
 type Point = (Double, Double)
 
 data Triangle = Triangle Point Point Point
 
 --contains :: Triangle -> Point -> Boolean
 --contains t p = 
+
+main = do
+  contents <- readFile "input/triangles.txt"
+  let triangles = map (split ',') (lines contents)
+  print triangles
