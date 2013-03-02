@@ -17,6 +17,19 @@ x = fst
 y :: Point -> Double
 y = snd
 
+data Line = Line {
+  p1 :: Point,
+  p2 :: Point
+  } deriving (Show)
+
+slope :: Line -> Double
+slope l = ((y . p2) l - (y . p1) l) / ((x . p2) l - (x . p1) l)
+
+yCoord :: Line -> Double -> Double
+yCoord l xCoord = m * (xCoord - x p) + y p
+  where m = slope l
+        p = p1 l
+
 data Triangle = Triangle {
   a :: Point,
   b :: Point,
