@@ -7,7 +7,7 @@
 -- Problem 102
 
 import Char(digitToInt)
-import ProjectEuler(split)
+import ProjectEuler(split, count)
 
 type Point = (Double, Double)
 
@@ -66,4 +66,6 @@ main = do
   contents <- readFile "input/triangles.txt"
   let coords = map (map stringToInteger) (map (split ',') (lines contents))
   let triangles = map (\(a:b:c:[]) -> Triangle a b c) (map makePoints coords)
-  print triangles
+  let Just containsCount =
+        (lookup True (count (map ((flip contains) (0, 0)) triangles)))
+  print containsCount
