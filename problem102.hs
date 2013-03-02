@@ -14,6 +14,7 @@ type Point = (Double, Double)
 data Triangle = Triangle Point Point Point
 
 stringToInteger :: String -> Integer
+stringToInteger ('-':xs) = -1 * stringToInteger xs
 stringToInteger s = fromIntegral 
                     $ sum 
                     $ zipWith (*) (map (10^) [0..]) 
@@ -25,5 +26,6 @@ stringToInteger s = fromIntegral
 
 main = do
   contents <- readFile "input/triangles.txt"
-  let triangles = map (split ',') (lines contents)
+  let coords = map (map stringToInteger) (map (split ',') (lines contents))
+  let triangles = []
   print triangles
