@@ -8,6 +8,7 @@
 
 import System.IO(openFile, hGetContents, hClose, IOMode(ReadMode))
 import Data.List(maximumBy, sort, sortBy, find)
+import ProjectEuler(count)
 
 data FaceValue = Two
                | Three
@@ -190,15 +191,6 @@ isOnePair hand = or (map
 
 highCard :: [Card] -> Card
 highCard = maximumBy (\c1 c2 -> compare (faceValue c1) (faceValue c2))
-
-count :: (Eq a) => [a] -> [(a, Integer)]
-count [] = []
-count (x:[]) = [(x, 1)]
-count (x:xs) 
-  | x `elem` xs = map 
-                  (\(y,n) -> if y == x then (y, n + 1) else (y, n)) 
-                  (count xs)
-  | otherwise = (x, 1) : (count xs)
 
 -- win h1 h2 evaluates to True if h1 is a better hand than h2, False otherwise
 win :: [Card] -> [Card] -> Bool

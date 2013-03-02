@@ -14,7 +14,8 @@ module ProjectEuler
   split,
   removeChar,
   digits,
-  phi
+  phi,
+  count
 ) where
 
 import Data.Char(ord)
@@ -65,3 +66,12 @@ digits n
 
 phi :: Integer -> Integer
 phi n = n * product [p - 1 | p <- primeDivisors n] `div` product [p | p <- primeDivisors n]
+
+count :: (Eq a) => [a] -> [(a, Integer)]
+count [] = []
+count (x:[]) = [(x, 1)]
+count (x:xs)
+  | x `elem` xs = map
+                  (\(y,n) -> if y == x then (y, n + 1) else (y, n))
+                  (count xs)
+  | otherwise = (x, 1) : (count xs)
