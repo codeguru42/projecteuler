@@ -6,11 +6,19 @@
 
 -- Problem 102
 
+import Char(digitToInt)
 import ProjectEuler(split)
 
 type Point = (Double, Double)
 
 data Triangle = Triangle Point Point Point
+
+stringToInteger :: String -> Integer
+stringToInteger s = fromIntegral 
+                    $ sum 
+                    $ zipWith (*) (map (10^) [0..]) 
+                    $ map digitToInt 
+                    $ reverse s
 
 --contains :: Triangle -> Point -> Boolean
 --contains t p = 
