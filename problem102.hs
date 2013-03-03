@@ -6,7 +6,7 @@
 
 -- Problem 102
 
-import Char(digitToInt)
+import Data.Char(digitToInt)
 import ProjectEuler(split, count)
 
 type Point = (Double, Double)
