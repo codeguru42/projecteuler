@@ -6,7 +6,7 @@
 
 -- Problem 51
 
-import ProjectEuler(isPrime)
+import ProjectEuler(isPrime, primes)
 
 replace :: String -> Char -> String
 replace s d = map (\c -> if c == '*' then d else c) s
@@ -27,10 +27,19 @@ primeCandidates s = filter isPrime (candidates s)
 
 wildcards :: String -> [String]
 wildcards [] = [[]]
-wildcards (x:xs) = (map (x:) (wildcards xs)) ++ (map ('*':) (wildcards xs))
+wildcards (x:xs) = (map (x:) (filter ('*' `elem`) (wildcards xs))) 
+                   ++ map ('*':) (wildcards xs)
+
+flatten :: [[a]] -> [a]
+flatten [[]] = []
+flatten (x:xs) = x ++ flatten xs
 
 main =  do
   let s = "*3"
   let s' = "56**3"
   print (primeCandidates s)
   print (primeCandidates s')
+  let w = flatten $ map (wildcards . show) primes
+  print (take 100 w)
+  print (take 100 (map primeCandidates w))
+  print (head (dropWhile (\l -> length l < 8) (map primeCandidates w)))
