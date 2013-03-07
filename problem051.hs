@@ -6,13 +6,19 @@
 
 -- Problem 51
 
---candidates :: Integer -> [Integer]
-
 replace :: String -> Char -> String
 replace s d = map (\c -> if c == '*' then d else c) s
 
+replaceAll :: String -> [Char] -> [String]
+replaceAll s = map (replace s)
+
 candidates :: String -> [Integer]
-candidates s = (map (read . (replace s)) ['0'..'9'])
+candidates s
+  | head s == '*' = let ss = rest
+                      in map read ss
+  | otherwise = let ss = replace s '0' : rest
+                  in map read ss
+  where rest = replaceAll s ['1'..'9']
 
 main =  do 
   print (candidates s)
