@@ -6,6 +6,8 @@
 
 -- Problem 51
 
+import ProjectEuler(isPrime)
+
 replace :: String -> Char -> String
 replace s d = map (\c -> if c == '*' then d else c) s
 
@@ -20,6 +22,11 @@ candidates s
                   in map read ss
   where rest = replaceAll s ['1'..'9']
 
-main =  do 
-  print (candidates s)
-    where s = "*3"
+primeCandidates :: String -> [Integer]
+primeCandidates s = filter isPrime (candidates s)
+
+main =  do
+  let s = "*3"
+  let s' = "56**3"
+  print (primeCandidates s)
+  print (primeCandidates s')
