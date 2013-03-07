@@ -17,13 +17,17 @@ replaceAll s = map (replace s)
 candidates :: String -> [Integer]
 candidates s
   | head s == '*' = let ss = rest
-                      in map read ss
+                    in map read ss
   | otherwise = let ss = replace s '0' : rest
-                  in map read ss
-  where rest = replaceAll s ['1'..'9']
+                in map read ss
+                  where rest = replaceAll s ['1'..'9']
 
 primeCandidates :: String -> [Integer]
 primeCandidates s = filter isPrime (candidates s)
+
+wildcards :: String -> [String]
+wildcards [] = [[]]
+wildcards (x:xs) = (map (x:) (wildcards xs)) ++ (map ('*':) (wildcards xs))
 
 main =  do
   let s = "*3"
