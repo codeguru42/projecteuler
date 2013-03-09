@@ -27,8 +27,11 @@ primeCandidates s = filter isPrime (candidates s)
 
 wildcards :: String -> [String]
 wildcards [] = [[]]
-wildcards (x:xs) = (map (x:) (filter ('*' `elem`) (wildcards xs))) 
-                   ++ map ('*':) (wildcards xs)
+wildcards (x:xs) = (map (x:) (filter ('*' `elem`) (wildcards' xs)))
+                   ++ map ('*':) (wildcards' xs)
+  where wildcards' [] = [[]]
+        wildcards' (x:xs) = (map (x:) (wildcards' xs))
+                            ++ map ('*':) (wildcards' xs)
 
 flatten :: [[a]] -> [a]
 flatten [[]] = []
@@ -42,4 +45,6 @@ main =  do
   let w = flatten $ map (wildcards . show) primes
   print (take 100 w)
   print (take 100 (map primeCandidates w))
-  print (head (dropWhile (\l -> length l < 8) (map primeCandidates w)))
+  let len = 8
+  print (minimum (head (dropWhile (\l -> length l < len) 
+                        (map primeCandidates w))))
