@@ -6,14 +6,16 @@
 
 -- Problem 61
 
+discriminant :: Integer -> Integer -> Integer -> Integer
+discriminant a b c = b ^ 2 - 4 * a * c
+
 triangle :: Integer -> Integer
 triangle n = n * (n + 1) `div` 2
 
 isTriangle :: Integer -> Bool
-isTriangle k = (discriminant >= 0)
-   && (isSquare discriminant)
-   && round (-1 + sqrt (fromIntegral discriminant)) `mod` 2 == 0
-  where discriminant = 1 + 8 * k
+isTriangle k = (d >= 0) && (isSquare d)
+               && round (-1 + sqrt (fromIntegral d)) `mod` 2 == 0
+  where d = discriminant 1 1 (-2 * k)
 
 square :: Integer -> Integer
 square n = n ^ 2
