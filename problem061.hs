@@ -30,6 +30,9 @@ isSquare k = (round .  sqrt . fromInteger $ k) ^ 2 == k
 pentagonal :: Integer -> Integer
 pentagonal n = n * (3 * n - 1) `div` 2
 
+isPentagonal :: Integer -> Bool
+isPentagonal k = isQuadraticSolutionInteger 3 (-1) (-2 * k)
+
 hexagonal :: Integer -> Integer
 hexagonal n = n * (2 * n - 1)
 
