@@ -22,14 +22,15 @@ import Data.Char(ord)
 
 isPrime :: Integer -> Bool
 isPrime 1 = False
-isPrime n = (filter  (divides n) (takeWhile (\d -> d * d <= n) [1..n])) == [1]
+isPrime n = (filter (divides n) (takeWhile (\d -> d * d <= n) [1..n])) == [1]
 
 -- All divisors of a number 
 divisors :: Integer -> [Integer] 
 divisors 1 = [1] 
 divisors n = firstHalf ++ secondHalf 
     where firstHalf = filter (divides n) (candidates n) 
-          secondHalf = filter (\d -> n `div` d /= d) (map (n `div`) (reverse firstHalf)) 
+          secondHalf = filter (\d -> n `div` d /= d) 
+                       (map (n `div`) (reverse firstHalf)) 
           candidates n = takeWhile (\d -> d * d <= n) [1..n]  
 
 divides :: Integer -> Integer -> Bool
@@ -65,7 +66,8 @@ digits n
     | otherwise = (n `mod` 10) : (digits (n `div` 10))
 
 phi :: Integer -> Integer
-phi n = n * product [p - 1 | p <- primeDivisors n] `div` product [p | p <- primeDivisors n]
+phi n = foldl div n ps * product [p - 1 | p <- ps]
+  where ps = primeDivisors n
 
 count :: (Eq a) => [a] -> [(a, Integer)]
 count [] = []
