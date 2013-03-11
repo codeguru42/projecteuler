@@ -9,13 +9,17 @@
 discriminant :: Integer -> Integer -> Integer -> Integer
 discriminant a b c = b ^ 2 - 4 * a * c
 
+isQuadraticSolutionInteger :: Integer -> Integer -> Integer -> Bool
+isQuadraticSolutionInteger a b c =  (d >= 0) && (isSquare d)
+                                    && round (-1 + sqrt (fromIntegral d)) 
+                                    `mod` (2 * a) == 0
+  where d = discriminant a b c
+
 triangle :: Integer -> Integer
 triangle n = n * (n + 1) `div` 2
 
 isTriangle :: Integer -> Bool
-isTriangle k = (d >= 0) && (isSquare d)
-               && round (-1 + sqrt (fromIntegral d)) `mod` 2 == 0
-  where d = discriminant 1 1 (-2 * k)
+isTriangle k = isQuadraticSolutionInteger 1 1 (-2 * k)
 
 square :: Integer -> Integer
 square n = n ^ 2
