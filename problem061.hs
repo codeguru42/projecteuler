@@ -39,4 +39,5 @@ heptagonal n = n * (5 * n - 3) `div` 2
 octagonal :: Integer -> Integer
 octagonal n = n * (3 * n - 2)
 
-main = print (map isTriangle [1..25])
+main = print (zip ns (map isTriangle ns))
+  where ns = [1..50]
