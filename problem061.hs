@@ -11,9 +11,9 @@ discriminant a b c = b ^ 2 - 4 * a * c
 
 isQuadraticSolutionInteger :: Integer -> Integer -> Integer -> Bool
 isQuadraticSolutionInteger a b c =  (d >= 0) && (isSquare d)
-                                    && -b + (round . sqrt . fromIntegral) d
+                                    && (-b + (round . sqrt . fromIntegral) d)
                                     `mod` (2 * a) == 0
-  where d = discriminant a b c
+                                      where d = discriminant a b c
 
 triangle :: Integer -> Integer
 triangle n = n * (n + 1) `div` 2
@@ -51,9 +51,7 @@ octagonal n = n * (3 * n - 2)
 isOctagonal :: Integer -> Bool
 isOctagonal k = isQuadraticSolutionInteger 3 (-2) (-k)
 
-main = do
-  let ns = [1..20]
-  let fs = [(isTriangle, triangle), (isSquare, square),
-            (isPentagonal, pentagonal), (isHexagonal, hexagonal),
-            (isHeptagonal, heptagonal), (isOctagonal, octagonal)]
-  print (map (\(f, g) -> (map f (map g ns))) fs)
+takeFourDigits :: [Integer] -> [Integer]
+takeFourDigits l = takeWhile (<10000) $ dropWhile (<1000) l
+
+main = print $ takeFourDigits $ map triangle [1..]
