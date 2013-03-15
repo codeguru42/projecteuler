@@ -54,4 +54,5 @@ isOctagonal k = isQuadraticSolutionInteger 3 (-2) (-k)
 takeFourDigits :: [Integer] -> [Integer]
 takeFourDigits l = takeWhile (<10000) $ dropWhile (<1000) l
 
-main = print $ takeFourDigits $ map triangle [1..]
+main = print $ map takeFourDigits $ map ($ [1..]) $ map map fs
+  where fs = [triangle, square, pentagonal, hexagonal, heptagonal, octagonal]
