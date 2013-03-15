@@ -11,7 +11,7 @@ discriminant a b c = b ^ 2 - 4 * a * c
 
 isQuadraticSolutionInteger :: Integer -> Integer -> Integer -> Bool
 isQuadraticSolutionInteger a b c =  (d >= 0) && (isSquare d)
-                                    && round (-b + sqrt (fromIntegral d))
+                                    && -b + (round . sqrt . fromIntegral) d
                                     `mod` (2 * a) == 0
   where d = discriminant a b c
 
