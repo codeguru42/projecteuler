@@ -33,16 +33,12 @@ wildcards (x:xs) = (map (x:) (filter ('*' `elem`) (wildcards' xs)))
         wildcards' (x:xs) = (map (x:) (wildcards' xs))
                             ++ map ('*':) (wildcards' xs)
 
-flatten :: [[a]] -> [a]
-flatten [[]] = []
-flatten (x:xs) = x ++ flatten xs
-
 main =  do
   let s = "*3"
   let s' = "56**3"
   print (primeCandidates s)
   print (primeCandidates s')
-  let w = flatten $ map (wildcards . show) primes
+  let w = concat $ map (wildcards . show) primes
   print (take 100 w)
   print (take 100 (map primeCandidates w))
   let len = 8
