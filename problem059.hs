@@ -13,3 +13,6 @@ encrypt key = zipWith xor $ cycle key
 
 decrypt :: [Integer] -> [Integer] -> [Integer]
 decrypt = encrypt
+
+dist :: (Num a) => [a] -> [a] -> a
+dist xs ys = sum $ map abs $ zipWith (-) xs ys
