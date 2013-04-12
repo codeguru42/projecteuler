@@ -8,6 +8,8 @@
 
 import Data.Bits(xor)
 import Data.Char(isSpace)
+import Data.List(minimumBy)
+import Data.Function(on)
 import System.IO(openFile, hGetContents, hClose, IOMode(ReadMode))
 import ProjectEuler(split)
 
@@ -22,6 +24,9 @@ dist xs ys = sum $ map abs $ zipWith (-) xs ys
 
 trim :: String -> String
 trim s = takeWhile (not . isSpace) $ dropWhile isSpace s
+
+makesMinimum :: (Ord b) => (a -> b) -> [a] -> a
+makesMinimum f xs = fst $ minimumBy (compare `on` snd) $ zip xs $ map f xs
 
 main = do
   handle <- openFile "input/cipher1.txt" ReadMode
