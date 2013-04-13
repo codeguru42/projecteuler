@@ -7,16 +7,16 @@
 -- Problem 59
 
 import Data.Bits(xor)
-import Data.Char(isSpace)
-import Data.List(minimumBy)
+import Data.Char(isSpace, ord, chr)
+import Data.List(minimumBy, sortBy)
 import Data.Function(on)
 import System.IO(openFile, hGetContents, hClose, IOMode(ReadMode))
-import ProjectEuler(split)
+import ProjectEuler(split, count)
 
-encrypt :: [Integer] -> [Integer] -> [Integer]
+encrypt :: [Int] -> [Int] -> [Int]
 encrypt key = zipWith xor $ cycle key
 
-decrypt :: [Integer] -> [Integer] -> [Integer]
+decrypt :: [Int] -> [Int] -> [Int]
 decrypt = encrypt
 
 dist :: (Num a) => [a] -> [a] -> a
@@ -31,6 +31,10 @@ makesMinimum f xs = fst $ minimumBy (compare `on` snd) $ zip xs $ map f xs
 main = do
   handle <- openFile "input/cipher1.txt" ReadMode
   contents <- hGetContents handle
-  let cryptAscii = map read $ split ',' $ trim contents :: [Integer]
-  print cryptAscii
+  let cryptAscii = map read $ split ',' $ trim contents :: [Int]
+  let keys = map (map ord) [[x, y, z] | x <- cs, y <- cs, z <- cs] 
+        where cs = ['a'..'z']
+  let plainAscii = map (flip encrypt cryptAscii) keys
+  let freqs = map count plainAscii
+  print $ take 5 $ map (sortBy (\(x,_) (y,_) -> compare x y)) freqs
   hClose handle
