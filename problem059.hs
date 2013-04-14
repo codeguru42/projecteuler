@@ -29,12 +29,18 @@ makesMinimum :: (Ord b) => (a -> b) -> [a] -> a
 makesMinimum f xs = fst $ minimumBy (compare `on` snd) $ zip xs $ map f xs
 
 main = do
-  handle <- openFile "input/cipher1.txt" ReadMode
-  contents <- hGetContents handle
-  let cryptAscii = map read $ split ',' $ trim contents :: [Int]
+  hFreqs <- openFile "input/frequencies.txt" ReadMode
+  freqContents <- hGetContents hFreqs
+  let engFreqs = map (\(c:f:[]) -> (c !! 0, (read f) :: Double))
+                 $ map (split '\t') (lines freqContents)
+  print engFreqs
+  hClose hFreqs
+  hCrypt <- openFile "input/cipher1.txt" ReadMode
+  cryptContents <- hGetContents hCrypt
+  let cryptAscii = map read $ split ',' $ trim cryptContents :: [Int]
   let keys = map (map ord) [[x, y, z] | x <- cs, y <- cs, z <- cs] 
         where cs = ['a'..'z']
   let plainAscii = map (flip encrypt cryptAscii) keys
   let freqs = map count plainAscii
   print $ take 5 $ map (sortBy (\(x,_) (y,_) -> compare x y)) freqs
-  hClose handle
+  hClose hCrypt
