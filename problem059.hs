@@ -34,6 +34,9 @@ makesMinimum f xs = fst $ minimumBy (compare `on` snd) $ zip xs $ map f xs
 insertAll :: (Ord a) => [a] -> [a] -> [a]
 insertAll xs l = nub $ foldl (flip ($)) l (map insert xs)
 
+sumAscii :: String -> Integer
+sumAscii s = sum $ map (fromIntegral . ord) s
+
 main = do
   hFreqs <- openFile "input/frequencies.txt" ReadMode
   freqContents <- hGetContents hFreqs
