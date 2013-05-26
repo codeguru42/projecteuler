@@ -18,7 +18,8 @@ module ProjectEuler
   count
 ) where
 
-import Data.Char(ord)
+import Data.Char (ord)
+import Data.List (sort, group)
 
 isPrime :: Integer -> Bool
 isPrime 1 = False
@@ -69,11 +70,5 @@ phi :: Integer -> Integer
 phi n = foldl div n ps * product [p - 1 | p <- ps]
   where ps = primeDivisors n
 
-count :: (Eq a) => [a] -> [(a, Integer)]
-count [] = []
-count (x:[]) = [(x, 1)]
-count (x:xs)
-  | x `elem` xs = map
-                  (\(y,n) -> if y == x then (y, n + 1) else (y, n))
-                  (count xs)
-  | otherwise = (x, 1) : (count xs)
+count :: (Ord a) => [a] -> [(a, Int)]
+count = (map $ \xs -> (head xs, length xs)) . group . sort
