@@ -26,6 +26,11 @@ s n = sum [b i | i <- [0..n]]
 ss :: [Integer]
 ss = map s [1..]
 
+fib :: Integer -> Integer
+fib 0 = 1
+fib 1 = 1
+fib n = fib (n - 1) + fib (n - 2)
+
 main = do
   print ns
   print $ map toBinaryString ns
