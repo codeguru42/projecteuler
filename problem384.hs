@@ -20,9 +20,16 @@ a = a' . toBinaryString
 b :: Integer -> Integer
 b n = (-1) ^ (a n)
 
+s :: Integer -> Integer
+s n = sum [b i | i <- [0..n]]
+
+ss :: [Integer]
+ss = map s [1..]
+
 main = do
   print ns
   print $ map toBinaryString ns
   print $ map a ns
   print $ map b ns
+  print $ take 50 ss
        where ns = [0..45]
