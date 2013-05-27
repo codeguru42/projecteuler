@@ -19,8 +19,14 @@ a = a' . toBinaryString
         a' ('1':'1':bits) = 1 + a' ('1':bits)
         a' (_:bits) = a' bits
 
+as :: [Integer]
+as = map a [0..]
+
 b :: Integer -> Integer
 b n = (-1) ^ (a n)
+
+bs :: [Integer]
+bs = map b [0..]
 
 s :: Integer -> Integer
 s n = sum [b i | i <- [0..n]]
@@ -45,8 +51,8 @@ fib n = fib (n - 1) + fib (n - 2)
 main = do
   print ns
   print $ map toBinaryString ns
-  print $ map a ns
-  print $ map b ns
+  print $ take 50 as
+  print $ take 50 bs
   print $ take 50 ss
   print $ g 3 3
   print $ g 4 2
