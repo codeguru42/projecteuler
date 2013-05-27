@@ -11,4 +11,11 @@ toBinaryString 0 = "0"
 toBinaryString 1 = "1"
 toBinaryString n = toBinaryString (n `div` 2) ++ toBinaryString (n `mod` 2)
 
-main = print $ map toBinaryString [0..45]
+a :: Integer -> Integer
+a = a' . toBinaryString
+  where a' "" = 0
+        a' ('1':'1':bits) = 1 + a' ('1':bits)
+        a' (_:bits) = a' bits
+
+main = print $ zip (map a ns) (map toBinaryString ns)
+       where ns = [0..45]
