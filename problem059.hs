@@ -8,10 +8,10 @@
 
 import Data.Bits (xor)
 import Data.Char (isSpace, ord, chr, toLower, isAlpha)
-import Data.List (maximumBy, sortBy)
+import Data.List (maximumBy)
 import Data.Function (on)
 import System.IO (openFile, hGetContents, hClose, IOMode(ReadMode))
-import ProjectEuler (split, count)
+import ProjectEuler (split)
 
 letterCount :: [Int] -> Int
 letterCount = length . filter (isAlpha . chr)
@@ -34,18 +34,13 @@ sumAscii :: String -> Integer
 sumAscii s = sum $ map (fromIntegral . ord) s
 
 main = do
-  hFreqs <- openFile "input/frequencies.txt" ReadMode
-  freqContents <- hGetContents hFreqs
-  let engFreqs = map (\(c:f:[]) -> (c !! 0, (read f) :: Double))
-                 $ map (split '\t') (lines freqContents)
-  print engFreqs
-  hClose hFreqs
   hCrypt <- openFile "input/cipher1.txt" ReadMode
   cryptContents <- hGetContents hCrypt
   let cryptAscii = map read $ split ',' $ trim cryptContents :: [Int]
   let keys = map (map ord) [[x, y, z] | x <- cs, y <- cs, z <- cs] 
         where cs = ['a'..'z']
   let plainAscii = map (flip encrypt cryptAscii) keys
-  let freqs = map count plainAscii
-  print $ take 5 $ map (sortBy (\(x,_) (y,_) -> compare x y)) freqs
+  let theOne = makesMaximum letterCount plainAscii
+  print $ map chr theOne
+  print $ sum theOne
   hClose hCrypt
