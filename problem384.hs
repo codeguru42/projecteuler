@@ -17,5 +17,12 @@ a = a' . toBinaryString
         a' ('1':'1':bits) = 1 + a' ('1':bits)
         a' (_:bits) = a' bits
 
-main = print $ zip (map a ns) (map toBinaryString ns)
+b :: Integer -> Integer
+b n = (-1) ^ (a n)
+
+main = do
+  print ns
+  print $ map toBinaryString ns
+  print $ map a ns
+  print $ map b ns
        where ns = [0..45]
