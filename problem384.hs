@@ -34,6 +34,9 @@ g t c = fromIntegral $ g' ss t c
         g' ss t c = k + 1 + g' (drop (k + 1) ss) t (c - 1)
                     where Just k = elemIndex t ss
 
+gf :: Integer -> Integer
+gf t = g (fib t) (fib $ t - 1)
+
 fib :: Integer -> Integer
 fib 0 = 1
 fib 1 = 1
@@ -48,4 +51,7 @@ main = do
   print $ g 3 3
   print $ g 4 2
   print $ g 54321 12345
+  print $ gfs
+  print $ sum gfs
        where ns = [0..45]
+             gfs = map gf ns
