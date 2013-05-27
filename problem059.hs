@@ -8,7 +8,7 @@
 
 import Data.Bits(xor)
 import Data.Char(isSpace, ord, chr)
-import Data.List(minimumBy, sortBy, insert, nub)
+import Data.List(maximumBy, sortBy, insert, nub)
 import Data.Function(on)
 import System.IO(openFile, hGetContents, hClose, IOMode(ReadMode))
 import ProjectEuler(split, count)
@@ -25,8 +25,8 @@ dist xs ys = sum $ map abs $ zipWith (-) xs ys
 trim :: String -> String
 trim s = takeWhile (not . isSpace) $ dropWhile isSpace s
 
-makesMinimum :: (Ord b) => (a -> b) -> [a] -> a
-makesMinimum f xs = fst $ minimumBy (compare `on` snd) $ zip xs $ map f xs
+makesMaximum :: (Ord b) => (a -> b) -> [a] -> a
+makesMaximum f xs = fst $ maximumBy (compare `on` snd) $ zip xs $ map f xs
 
 -- 'insertAll xs l' inserts each element 'x' of 'xs' into the sorted list 'l' 
 -- immediately before the first element of 'l' which is greater than 'x' if 'x'
