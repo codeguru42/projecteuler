@@ -6,12 +6,15 @@
 
 -- Problem 59
 
-import Data.Bits(xor)
-import Data.Char(isSpace, ord, chr)
-import Data.List(maximumBy, sortBy, insert, nub)
-import Data.Function(on)
-import System.IO(openFile, hGetContents, hClose, IOMode(ReadMode))
-import ProjectEuler(split, count)
+import Data.Bits (xor)
+import Data.Char (isSpace, ord, chr, toLower, isAlpha)
+import Data.List (maximumBy, sortBy)
+import Data.Function (on)
+import System.IO (openFile, hGetContents, hClose, IOMode(ReadMode))
+import ProjectEuler (split, count)
+
+letterCount :: [Int] -> Int
+letterCount = length . filter (isAlpha . chr)
 
 encrypt :: [Int] -> [Int] -> [Int]
 encrypt key = zipWith xor $ cycle key
