@@ -44,9 +44,11 @@ gf :: Integer -> Integer
 gf t = g (fib t) (fib $ t - 1)
 
 fib :: Integer -> Integer
-fib 0 = 1
-fib 1 = 1
-fib n = fib (n - 1) + fib (n - 2)
+fib n = head $ fib' n []
+  where fib' 0 fibs = fibs
+        fib' n [] = fib' (n - 1) [1]
+        fib' n [1] = fib' (n - 1) [1, 1]
+        fib' n fibs@(f1:f2:_) = fib' (n - 1) $ (f1 + f2) : fibs
 
 main = do
   print ns
