@@ -19,20 +19,13 @@ encrypt key = zipWith xor $ cycle key
 decrypt :: [Int] -> [Int] -> [Int]
 decrypt = encrypt
 
-dist :: (Num a) => [a] -> [a] -> a
-dist xs ys = sum $ map abs $ zipWith (-) xs ys
-
+-- This works for the current use case but does not, in general, correctly
+-- trim leading and trailing whitespace as intended
 trim :: String -> String
 trim s = takeWhile (not . isSpace) $ dropWhile isSpace s
 
 makesMaximum :: (Ord b) => (a -> b) -> [a] -> a
 makesMaximum f xs = fst $ maximumBy (compare `on` snd) $ zip xs $ map f xs
-
--- 'insertAll xs l' inserts each element 'x' of 'xs' into the sorted list 'l' 
--- immediately before the first element of 'l' which is greater than 'x' if 'x'
--- does not already appear in 'l'
-insertAll :: (Ord a) => [a] -> [a] -> [a]
-insertAll xs l = nub $ foldl (flip ($)) l (map insert xs)
 
 sumAscii :: String -> Integer
 sumAscii s = sum $ map (fromIntegral . ord) s
