@@ -7,9 +7,8 @@
 -- Problem 59
 
 import Data.Bits (xor)
-import Data.Char (isSpace, ord, chr, toLower, isAlpha)
-import Data.List (maximumBy)
-import Data.Function (on)
+import Data.Char (isSpace, ord, chr, isAlpha)
+import Data.List (sortBy)
 import System.IO (openFile, hGetContents, hClose, IOMode(ReadMode))
 import ProjectEuler (split)
 
@@ -28,7 +27,7 @@ trim :: String -> String
 trim s = takeWhile (not . isSpace) $ dropWhile isSpace s
 
 makesMaximum :: (Ord b) => (a -> b) -> [a] -> a
-makesMaximum f xs = fst $ maximumBy (compare `on` snd) $ zip xs $ map f xs
+makesMaximum f = head . sortBy (\x y -> compare (f y) (f x))
 
 sumAscii :: String -> Integer
 sumAscii s = sum $ map (fromIntegral . ord) s
