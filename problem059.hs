@@ -35,11 +35,11 @@ sumAscii s = sum $ map (fromIntegral . ord) s
 main = do
   hCrypt <- openFile "input/cipher1.txt" ReadMode
   cryptContents <- hGetContents hCrypt
-  let cryptAscii = map read $ split ',' $ trim cryptContents :: [Int]
-  let keys = map (map ord) [[x, y, z] | x <- cs, y <- cs, z <- cs] 
+  let cryptAscii = map read . split ',' $ trim cryptContents
+      keys = [map ord [x, y, z] | x <- cs, y <- cs, z <- cs]
         where cs = ['a'..'z']
-  let plainAscii = map (flip encrypt cryptAscii) keys
-  let theOne = makesMaximum letterCount plainAscii
+      plainAscii = map (flip encrypt cryptAscii) keys
+      theOne = makesMaximum letterCount plainAscii
   print $ map chr theOne
   print $ sum theOne
   hClose hCrypt
