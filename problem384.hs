@@ -32,11 +32,11 @@ s :: Integer -> Integer
 s n = sum [b i | i <- [0..n]]
 
 ss :: [Integer]
-ss = map s [1..]
+ss = map s [0..]
 
 g :: Integer -> Integer -> Integer
 g t c = fromIntegral $ g' ss t c
-  where g' ss t 1 = let Just k = elemIndex t ss in k + 1
+  where g' ss t 1 = let Just k = elemIndex t ss in k
         g' ss t c = k + 1 + g' (drop (k + 1) ss) t (c - 1)
                     where Just k = elemIndex t ss
 
