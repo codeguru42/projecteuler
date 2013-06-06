@@ -29,10 +29,10 @@ bs :: [Integer]
 bs = map b [0..]
 
 s :: Integer -> Integer
-s n = sum [b i | i <- [0..n]]
+s n = sum . take (fromIntegral n) $ bs
 
 ss :: [Integer]
-ss = map s [0..]
+ss = scanl1 (+) bs
 
 g :: Integer -> Integer -> Integer
 g t c = fromIntegral $ g' ss t c
