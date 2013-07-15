@@ -9,7 +9,11 @@
 import Control.Applicative (liftA2)
 
 data Vertex = Vertex Double Double
+              deriving (Eq)
+
 data Triangle = Triangle Vertex Vertex Vertex
+                deriving (Show)
+
 data Ellipse = Ellipse Double Double
 data Line = Line Vertex Vertex
 
@@ -48,4 +52,7 @@ main = do
     let sqrt13 = sqrt 13
     let ns = [-n..n]
     let vs = liftA2 Vertex ns ns
-    mapM_ print vs
+    let ts = [Triangle v1 v2 v3 | v1 <- vs,
+                                  v2 <- dropWhile (/= v1) vs,
+                                  v3 <- dropWhile (/= v2) vs]
+    mapM_ print ts
