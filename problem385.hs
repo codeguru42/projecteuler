@@ -8,6 +8,7 @@
 
 data Vertex = Vertex Double Double
 data Triangle = Triangle Vertex Vertex Vertex
+data Ellipse = Ellipse Double Double
 
 class Shape s where
     area :: s -> Double
@@ -18,6 +19,9 @@ instance Shape Triangle where
                                    c = distance v3 v1
                                    s = (a + b + c) / 2
                                in sqrt $ s * (s - a) * (s - b) * (s - c)
+
+instance Shape Ellipse where
+    area (Ellipse a b) = pi * a * b
 
 distance :: Vertex -> Vertex -> Double
 distance (Vertex x1 y1) (Vertex x2 y2)
