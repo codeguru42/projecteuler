@@ -6,6 +6,8 @@
 
 -- Problem 385
 
+import Control.Applicative (liftA2)
+
 data Vertex = Vertex Double Double
 data Triangle = Triangle Vertex Vertex Vertex
 data Ellipse = Ellipse Double Double
@@ -23,6 +25,15 @@ instance Shape Triangle where
 instance Shape Ellipse where
     area (Ellipse a b) = pi * a * b
 
+instance Show Vertex where
+    show (Vertex x y) = ('(':show x) ++ (',':show y) ++ ")"
+
 distance :: Vertex -> Vertex -> Double
 distance (Vertex x1 y1) (Vertex x2 y2)
     = sqrt $ (x2 - x1)^2 + (y2 - y1)^2
+
+main = do
+    let n = 8
+    let ns = [-n..n]
+    let vs = liftA2 Vertex ns ns
+    mapM_ print vs
