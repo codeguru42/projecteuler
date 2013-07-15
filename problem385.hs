@@ -11,6 +11,7 @@ import Control.Applicative (liftA2)
 data Vertex = Vertex Double Double
 data Triangle = Triangle Vertex Vertex Vertex
 data Ellipse = Ellipse Double Double
+data Line = Line Vertex Vertex
 
 class Shape s where
     area :: s -> Double
@@ -35,8 +36,16 @@ distance (Vertex x1 y1) (Vertex x2 y2)
 focus :: Ellipse -> Double
 focus (Ellipse a b) = sqrt $ a^2 - b^2
 
+slope :: Line -> Double
+slope (Line (Vertex x1 y1) (Vertex x2 y2)) = (y2 - y1) / (x2 - x1)
+
+yIntercept :: Line -> Double
+yIntercept l@(Line (Vertex x y) _) = let m = slope l
+                                     in y - m*x
+
 main = do
     let n = 8
+    let sqrt13 = sqrt 13
     let ns = [-n..n]
     let vs = liftA2 Vertex ns ns
     mapM_ print vs
