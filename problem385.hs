@@ -32,6 +32,9 @@ distance :: Vertex -> Vertex -> Double
 distance (Vertex x1 y1) (Vertex x2 y2)
     = sqrt $ (x2 - x1)^2 + (y2 - y1)^2
 
+focus :: Ellipse -> Double
+focus (Ellipse a b) = sqrt $ a^2 - b^2
+
 main = do
     let n = 8
     let ns = [-n..n]
