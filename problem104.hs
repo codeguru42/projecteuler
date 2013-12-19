@@ -6,8 +6,8 @@
 
 -- Problem 104
 
-fib :: Integer -> Integer
-fib n = round $ (phi ^ n - (-1.0 / phi) ^ (n)) / sqrt 5.0
-    where phi = (1.0 + sqrt 5.0) / 2.0
+fib :: [Integer]
+fib = 0 : 1 : fib' fib
+    where fib' (x:y:xs) = (x + y) : fib' (y:xs)
 
-main = print $ map fib [1..10]
+main = print $ (fib !! 541) `mod` 10^9
