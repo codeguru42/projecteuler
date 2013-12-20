@@ -6,8 +6,18 @@
 
 -- Problem 104
 
+import ProjectEuler
+import Data.List (sort)
+
 fib :: [Integer]
 fib = 0 : 1 : fib' fib
     where fib' (x:y:xs) = (x + y) : fib' (y:xs)
 
-main = print $ (fib !! 541) `mod` 10^9
+isPandigital :: Integer -> Bool
+isPandigital n = sort (digits n) == [1..9]
+
+main = do
+    print $ (fib !! 2749) `mod` 10^9
+    print . map fst
+          . filter (\(_, x) -> isPandigital $ x `mod` 10^9) 
+          $ zip [0..] fib
