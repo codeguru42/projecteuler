@@ -16,8 +16,14 @@ fib = 0 : 1 : fib' fib
 isPandigital :: Integer -> Bool
 isPandigital n = sort (digits n) == [1..9]
 
+isTrailingPandigital :: Integer -> Bool
+isTrailingPandigital n = isPandigital $ n `mod` 10 ^ 9
+
+isLeadingPandigital :: Integer -> Bool
+isLeadingPandigital n = sort (take 9 (reverse (digits n))) == [1..9]
+
 main = do
-    print $ (fib !! 2749) `mod` 10^9
-    print . map fst
-          . filter (\(_, x) -> isPandigital $ x `mod` 10^9) 
+    print . head
+          . map fst
+          . filter (isLeadingPandigital . snd)
           $ zip [0..] fib
