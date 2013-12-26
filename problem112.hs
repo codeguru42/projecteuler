@@ -18,9 +18,14 @@ isDecreasingNumber n = isDecreasingNumber' $ digits n
     where isDecreasingNumber' [x] = True
           isDecreasingNumber' (x:y:xs) = x <= y && isDecreasingNumber' (y:xs)
 
+isBouncyNumber :: Integer -> Bool
+isBouncyNumber n = not (isIncreasingNumber n || isDecreasingNumber n)
+
 main = do
     putStrLn "Increasing..."
     print $ filter isIncreasingNumber ns
     putStrLn "Decreasing..."
     print $ filter isDecreasingNumber ns
-    where ns = [100..500]
+    putStrLn "Bouncy..."
+    print $ filter isBouncyNumber ns
+    where ns = [1..1000]
