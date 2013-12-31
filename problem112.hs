@@ -21,8 +21,8 @@ isDecreasingNumber n = isDecreasingNumber' $ digits n
 isBouncyNumber :: Integer -> Bool
 isBouncyNumber n = not (isIncreasingNumber n || isDecreasingNumber n)
 
-bouncyNumbers :: Integer -> [Integer]
-bouncyNumbers n = filter isBouncyNumber [1..n]
+bouncyNumbers :: [Integer]
+bouncyNumbers = filter isBouncyNumber [1..]
 
 main = do
-    print . head $ [n | n <- [1..], fromIntegral (length (bouncyNumbers n)) >= 0.5 * fromIntegral n]
+    print . head $ [n | n <- [1..], fromIntegral (length (takeWhile (<=n) bouncyNumbers)) >= 0.99 * fromIntegral n]
