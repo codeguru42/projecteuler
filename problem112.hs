@@ -8,21 +8,24 @@
 
 import ProjectEuler
 
-isIncreasingNumber :: Integer -> Bool
+isIncreasingNumber :: Int -> Bool
 isIncreasingNumber n = isIncreasingNumber' $ digits n
     where isIncreasingNumber' [x] = True
           isIncreasingNumber' (x:y:xs) = x >= y && isIncreasingNumber' (y:xs)
 
-isDecreasingNumber :: Integer -> Bool
+isDecreasingNumber :: Int -> Bool
 isDecreasingNumber n = isDecreasingNumber' $ digits n
     where isDecreasingNumber' [x] = True
           isDecreasingNumber' (x:y:xs) = x <= y && isDecreasingNumber' (y:xs)
 
-isBouncyNumber :: Integer -> Bool
+isBouncyNumber :: Int -> Bool
 isBouncyNumber n = not (isIncreasingNumber n || isDecreasingNumber n)
 
-bouncyNumbers :: [Integer]
+bouncyNumbers :: [Int]
 bouncyNumbers = filter isBouncyNumber [1..]
 
+indexedBouncyNumbers :: [(Int, Int)]
+indexedBouncyNumbers = zip [1..] bouncyNumbers
+
 main = do
-    print . head $ [n | n <- [1..], fromIntegral (length (takeWhile (<=n) bouncyNumbers)) >= 0.99 * fromIntegral n]
+    print . head $ [n | (i, n) <- indexedBouncyNumbers, fromIntegral i >= 0.99 * fromIntegral n]
