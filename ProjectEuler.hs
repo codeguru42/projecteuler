@@ -20,6 +20,7 @@ module ProjectEuler
 
 import Data.Char (ord)
 import Data.List (sort, group)
+import Data.List.Ordered (minus)
 
 isPrime :: Integer -> Bool
 isPrime 1 = False
@@ -40,8 +41,10 @@ divides n = (==0) . (n `mod`)
 primeDivisors :: Integer -> [Integer]
 primeDivisors n = filter isPrime (divisors n)
 
-primes :: [Integer]
-primes = filter isPrime [2..]
+primes :: Integer -> [Integer]
+primes m = eratos [2..m]  where
+   eratos []     = []
+   eratos (p:xs) = p : eratos (xs `minus` [p*p, p*p+p..m])
 
 charScore :: Char -> Integer
 charScore c = fromIntegral (ord c - ord 'A' + 1)
