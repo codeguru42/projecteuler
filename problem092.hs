@@ -11,8 +11,15 @@ import ProjectEuler
 squareDigits :: Int -> Int
 squareDigits n = sum . map (\x -> x * x) $ digits n
 
-main = print . sum $ map ((\x -> if x == 89 then 1 else 0) . squareDigits . last) chains
-    where chain = takeWhile (\x -> x /= 1 && x /= 89)
+takeUntil :: (a -> Bool) -> [a] -> [a]
+takeUntil _ [] = []
+takeUntil p (x:xs) = x
+                   : if not $ p x
+                     then takeUntil p xs
+                     else []
+
+main = print . sum $ map ((\x -> if x == 89 then 1 else 0) . last) chains
+    where chain = takeUntil (\x -> x == 1 || x == 89)
                         . iterate squareDigits
-          chains = filter (not . null) $ map chain [2..n]
+          chains = map chain [2..n]
           n = 100000
