@@ -9,5 +9,7 @@
 import ProjectEuler
 
 main = do
-    let mods = map (\(n, p) -> ((p - 1) ^ n + (p + 1) ^ n) `mod` (p*p)) $ zip [1..] primes
-    print . head . dropWhile (\x -> snd x <10^10) $ zip [1..] mods
+    let k = 10^10
+    let ps = primes k
+    let mods = map (\(n, p) -> ((p - 1) ^ n + (p + 1) ^ n) `mod` (p*p)) $ zip [1..] ps
+    print . head . dropWhile (\x -> snd x < k) $ zip [1..] mods

@@ -6,6 +6,17 @@
 
 -- Problem 124
 
+import Data.List (sortBy)
+
 import ProjectEuler
 
-main = undefined
+rad = product . primeDivisors
+
+e n k = fst $ sorted !! k
+    where sorted = sortBy (\(x1, y1) (x2, y2) -> if y1 == y2
+                                                 then x1 `compare` x2
+                                                 else y1 `compare` y2)
+                    . zip [1..]
+                    $ map rad [1..n]
+
+main = print $ e 100000 (10000 - 1)
