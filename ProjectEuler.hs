@@ -21,6 +21,7 @@ module ProjectEuler
 import Data.Char (ord)
 import Data.List (sort, group)
 import Data.List.Ordered (minus)
+import qualified Data.Map as Map
 
 isPrime :: Integer -> Bool
 isPrime 1 = False
@@ -42,22 +43,17 @@ primeDivisors :: Integer -> [Integer]
 primeDivisors n = filter isPrime (divisors n)
 
 primes :: [Integer]
-primes = 2:([3..] `ProjectEuler.minus` composites)
-  where composites = union [multiples p | p <- primes]
+primes = sieve [2..]
 
-multiples n = map (n*) [n..]
-
-(x:xs) `minus` (y:ys)
-  | x < y = x:(xs `ProjectEuler.minus` (y:ys))
-  | x == y = xs `ProjectEuler.minus` ys
-  | x > y = (x:xs) `ProjectEuler.minus` ys
-
-union = foldr merge [ ]
-  where merge (x:xs) ys = x:merge' xs ys
-        merge' (x:xs) (y:ys)
-          | x < y = x:merge' xs (y:ys)
-          | x == y = x:merge' xs ys
-          | x > y = y:merge' (x:xs) ys
+sieve xs = sieve' xs Map.empty
+  where
+    sieve' []     table = []
+    sieve' (x:xs) table =
+      case Map.lookup x table of
+        Nothing -> x : sieve' xs (Map.insert (x*x) [x] table)
+        Just facts -> sieve' xs (foldl reinsert (Map.delete x table) facts)
+        where
+          reinsert table prime = Map.insertWith (++) (x+prime) [prime] table
 
 charScore :: Char -> Integer
 charScore c = fromIntegral (ord c - ord 'A' + 1)
