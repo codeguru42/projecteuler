@@ -41,10 +41,23 @@ divides n = (==0) . (n `mod`)
 primeDivisors :: Integer -> [Integer]
 primeDivisors n = filter isPrime (divisors n)
 
-primes :: Integer -> [Integer]
-primes m = eratos [2..m]  where
-   eratos []     = []
-   eratos (p:xs) = p : eratos (xs `minus` [p*p, p*p+p..m])
+primes :: [Integer]
+primes = 2:([3..] `ProjectEuler.minus` composites)
+  where composites = union [multiples p | p <- primes]
+
+multiples n = map (n*) [n..]
+
+(x:xs) `minus` (y:ys)
+  | x < y = x:(xs `ProjectEuler.minus` (y:ys))
+  | x == y = xs `ProjectEuler.minus` ys
+  | x > y = (x:xs) `ProjectEuler.minus` ys
+
+union = foldr merge [ ]
+  where merge (x:xs) ys = x:merge' xs ys
+        merge' (x:xs) (y:ys)
+          | x < y = x:merge' xs (y:ys)
+          | x == y = x:merge' xs ys
+          | x > y = y:merge' (x:xs) ys
 
 charScore :: Char -> Integer
 charScore c = fromIntegral (ord c - ord 'A' + 1)
