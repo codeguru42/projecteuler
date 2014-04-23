@@ -6,4 +6,8 @@
 
 -- Problem 129
 
-main = undefined
+import Data.List (nub)
+
+pascalsTriangle = iterate (\row -> zipWith (+) (0:row) (row ++ [0])) [1]
+
+main = print . nub . concat $ take 51 pascalsTriangle
