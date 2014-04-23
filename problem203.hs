@@ -7,7 +7,13 @@
 -- Problem 129
 
 import Data.List (nub)
+import ProjectEuler
 
 pascalsTriangle = iterate (\row -> zipWith (+) (0:row) (row ++ [0])) [1]
 
-main = print . nub . concat $ take 51 pascalsTriangle
+isSquareFree n = length (filter (\p -> n `mod` (p*p) == 0) ps) == 0
+    where ps = takeWhile (\p -> p*p <= n) primes
+    
+main = do 
+    let xs = filter isSquareFree . nub . concat $ take 51 pascalsTriangle
+    print $ sum xs
