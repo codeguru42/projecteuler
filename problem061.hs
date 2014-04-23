@@ -6,6 +6,9 @@
 
 -- Problem 61
 
+import Data.List (nub)
+import Control.Applicative ((<$>), (<*>))
+
 discriminant :: Integer -> Integer -> Integer -> Integer
 discriminant a b c = b ^ 2 - 4 * a * c
 
@@ -54,5 +57,23 @@ isOctagonal k = isQuadraticSolutionInteger 3 (-2) (-k)
 takeFourDigits :: [Integer] -> [Integer]
 takeFourDigits l = takeWhile (<10000) $ dropWhile (<1000) l
 
-main = print $ map takeFourDigits $ map ($ [1..]) $ map map fs
-  where fs = [triangle, square, pentagonal, hexagonal, heptagonal, octagonal]
+isPair :: Integer -> Integer -> Bool
+isPair x y = x `mod` 100 == y `div` 100
+
+fours = takeFourDigits <$> ($ [1..]) <$> map <$> fs
+    where fs = [triangle, square, pentagonal, hexagonal, heptagonal, octagonal]
+
+filterPairs :: Integer -> [Integer] -> [Integer]
+filterPairs x xs = filter (isPair x) xs
+
+continueChain :: [Integer] -> [Integer] -> [[Integer]]
+continueChain []     xs = map (:[])   xs
+continueChain (c:cs) xs = map (:c:cs) heads
+    where heads = filterPairs c xs
+
+allPairs xs ys = concat . map ($ ys) $ continueChain <$> map (:[]) xs
+
+main = do
+    mapM_ print $ allPairs xs xs
+    print . length $ allPairs xs xs
+    where xs = nub $ concat fours
