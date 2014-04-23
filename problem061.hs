@@ -71,9 +71,10 @@ continueChain []     xs = map (:[])   xs
 continueChain (c:cs) xs = map (:c:cs) heads
     where heads = filterPairs c xs
 
-allPairs xs ys = concat . map ($ ys) $ continueChain <$> map (:[]) xs
+findChains xs = iterate (concat . map (\as -> continueChain as xs)) [[]]
 
 main = do
-    mapM_ print $ allPairs xs xs
-    print . length $ allPairs xs xs
+    let chains = findChains xs !! 6
+    mapM_ print $ chains
+    print $ length chains
     where xs = nub $ concat fours
