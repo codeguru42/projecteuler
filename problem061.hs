@@ -73,8 +73,23 @@ continueChain (c:cs) xs = map (:c:cs) heads
 
 findChains xs = iterate (concat . map (\as -> continueChain as xs)) [[]]
 
+oneOfEach fs = any isTriangle as
+            && any isSquare bs
+            && any isPentagonal cs
+            && any isHexagonal ds
+            && any isHeptagonal es
+            && any isOctagonal fs
+    where --bs = filter (not . isTriangle) as
+          as = filter (not . isSquare) bs
+          bs = filter (not . isPentagonal) cs
+          cs = filter (not . isHexagonal) ds
+          ds = filter (not . isHeptagonal) es
+          es = filter (not . isOctagonal) fs
+
 main = do
     let chains = findChains xs !! 6
-    mapM_ print $ chains
-    print $ length chains
+    let cycles = filter (\as -> isPair (head as) (last as)) chains
+    let theOne = filter oneOfEach cycles
+    mapM_ print theOne
+    print . head . nub $ map sum theOne
     where xs = nub $ concat fours
