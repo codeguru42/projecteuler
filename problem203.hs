@@ -11,7 +11,7 @@ import ProjectEuler
 
 pascalsTriangle = iterate (\row -> zipWith (+) (0:row) (row ++ [0])) [1]
 
-isSquareFree n = length (filter (\p -> n `mod` (p*p) == 0) ps) == 0
+isSquareFree n = null $ filter (\p -> n `mod` (p*p) == 0) ps
     where ps = takeWhile (\p -> p*p <= n) primes
     
 main = do 
