@@ -6,16 +6,7 @@
 
 -- Problem 69
 
-import ProjectEuler (phi)
+import ProjectEuler (primes)
 
-maxRatio :: (Integer, Integer, Double) -> (Integer, Integer, Double) -> (Integer, Integer, Double)
-maxRatio t1@(_, _, x) t2@(_, _, y)
-  | x > y = t1
-  | otherwise = t2
-
-main = print (foldl
-                maxRatio
-                (0, 0, 0.0)
-                [(n, phi n, ratio) | n <- [2..max], let ratio = fromIntegral n / (fromIntegral (phi n))]
-              )
+main = print . last . takeWhile (<max) $ scanl (*) 1 primes
     where max = 1000000
