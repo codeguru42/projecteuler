@@ -40,7 +40,8 @@ divides :: Integer -> Integer -> Bool
 divides n = (==0) . (n `mod`)
 
 primeDivisors :: Integer -> [Integer]
-primeDivisors n = filter isPrime (divisors n)
+primeDivisors n = filter (divides n) ps
+  where ps = takeWhile (\p -> p * p <= n) primes
 
 primes :: [Integer]
 primes = sieve [2..]
