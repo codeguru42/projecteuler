@@ -6,4 +6,10 @@
 
 -- Problem 81
 
-main = undefined
+import Control.Applicative ((<$>))
+import Data.List.Split (splitOn)
+
+main = do
+    contents <- readFile "input/matrix.txt"
+    let xs = map (read <$>) . map (splitOn ",") $ lines contents :: [[Int]]
+    mapM_ print xs
