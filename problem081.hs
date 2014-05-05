@@ -9,7 +9,12 @@
 import Control.Applicative ((<$>))
 import Data.List.Split (splitOn)
 
+toTriangle :: [[Int]] -> [[Int]]
+toTriangle xss = [[t i j | i <- [0..j]] | j <- [0..m-1]]
+    where m = length xss
+          t i j = xss !! abs (i - j) !! i
+
 main = do
     contents <- readFile "input/matrix.txt"
-    let xs = map (read <$>) . map (splitOn ",") $ lines contents :: [[Int]]
-    mapM_ print xs
+    let xss = map (read <$>) . map (splitOn ",") $ lines contents :: [[Int]]
+    mapM_ print $ toTriangle xss
