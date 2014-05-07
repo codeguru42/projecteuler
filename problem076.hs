@@ -6,12 +6,14 @@
 
 -- Problem 76
 
-partition 0 = 1
-partition n 
-    | n < 0 = 0
-    | otherwise = sum $ map (\k -> let n1 = n - k * (3*k - 1) `div` 2 
-                                       n2 = n - k * (3*k + 1) `div` 2
-                                   in (-1)^(k+1) * (partition n1 + partition n2)
-                            ) [1..n]
+partition n = p !! n
+    where p = [p' n' | n' <- [0..n+1]]
+          p' 0 = 1
+          p' n = sum $ map (\k -> let n1 = n - k * (3*k - 1) `div` 2 
+                                      n2 = n - k * (3*k + 1) `div` 2
+                                      p1 = if n1 < 0 then 0 else p !! n1
+                                      p2 = if n2 < 0 then 0 else p !! n2
+                                  in (-1)^(k+1) * (p1 + p2)
+                           ) [1..n]
 
-main = print $ partition 5 - 1
+main = print $ partition 100 - 1
