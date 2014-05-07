@@ -7,7 +7,8 @@
 -- Problem 102
 
 import Data.Char(digitToInt)
-import ProjectEuler(split, count)
+import Data.List.Split (splitOn)
+import ProjectEuler(count)
 
 type Point = (Double, Double)
 
@@ -39,14 +40,6 @@ data Triangle = Triangle {
   c :: Point
   } deriving (Show)
 
-stringToInteger :: String -> Integer
-stringToInteger ('-':xs) = -1 * stringToInteger xs
-stringToInteger s = fromIntegral 
-                    $ sum 
-                    $ zipWith (*) (map (10^) [0..]) 
-                    $ map digitToInt 
-                    $ reverse s
-
 makePoints :: [Integer] -> [Point]
 makePoints [] = []
 makePoints (x:y:ps) = (fromInteger x, fromInteger y) : makePoints ps
@@ -64,7 +57,7 @@ contains t p = whichSide p s1 == whichSide v3 s1
 
 main = do
   contents <- readFile "input/triangles.txt"
-  let coords = map (map stringToInteger) (map (split ',') (lines contents))
+  let coords = map (map read) (map (splitOn ",") (lines contents))
   let triangles = map (\(a:b:c:[]) -> Triangle a b c) (map makePoints coords)
   let Just containsCount =
         (lookup True (count (map ((flip contains) (0, 0)) triangles)))

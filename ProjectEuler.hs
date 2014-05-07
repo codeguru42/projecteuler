@@ -11,7 +11,6 @@ module ProjectEuler
   primeDivisors,
   primes,
   wordScore,
-  split,
   removeChar,
   digits,
   phi,
@@ -61,12 +60,6 @@ charScore c = fromIntegral (ord c - ord 'A' + 1)
 
 wordScore :: String -> Integer
 wordScore s = sum (map charScore s)
-
-split :: Char -> String -> [String] 
-split _ "" = [] 
-split c s = firstWord : (split c rest) 
-    where firstWord = takeWhile (/=c) s 
-          rest = drop (length firstWord + 1) s 
 
 removeChar :: Char -> String -> String 
 removeChar _ [] = [] 
