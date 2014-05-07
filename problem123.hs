@@ -10,6 +10,6 @@ import ProjectEuler
 
 main = do
     let k = 10^10
-    let ps = primes k
+    let ps = takeWhile (<=k) primes
     let mods = map (\(n, p) -> ((p - 1) ^ n + (p + 1) ^ n) `mod` (p*p)) $ zip [1..] ps
     print . head . dropWhile (\x -> snd x < k) $ zip [1..] mods
