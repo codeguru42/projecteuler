@@ -6,4 +6,12 @@
 
 -- Problem 76
 
-main = undefined
+partition 0 = 1
+partition n 
+    | n < 0 = 0
+    | otherwise = sum $ map (\k -> let n1 = n - k * (3*k - 1) `div` 2 
+                                       n2 = n - k * (3*k + 1) `div` 2
+                                   in (-1)^(k+1) * (partition n1 + partition n2)
+                            ) [1..n]
+
+main = print $ partition 5 - 1
