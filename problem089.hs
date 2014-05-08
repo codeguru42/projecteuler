@@ -6,4 +6,7 @@
 
 -- Problem 89
 
-main = undefined
+main = do
+    content <- readFile "input/roman.txt"
+    let ls = lines content
+    mapM_ putStrLn ls
