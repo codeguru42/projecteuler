@@ -6,21 +6,21 @@
 
 -- Problem 89
 
-fromRomanNumeral :: String -> Int
-fromRomanNumeral "" = 0
-fromRomanNumeral ('I':'V':ns) =    4 + fromRomanNumeral ns
-fromRomanNumeral ('I':'X':ns) =    9 + fromRomanNumeral ns
-fromRomanNumeral ('V':ns)     =    5 + fromRomanNumeral ns
-fromRomanNumeral ('I':ns)     =    1 + fromRomanNumeral ns
-fromRomanNumeral ('X':'L':ns) =   40 + fromRomanNumeral ns
-fromRomanNumeral ('X':'C':ns) =   90 + fromRomanNumeral ns
-fromRomanNumeral ('X':ns)     =   10 + fromRomanNumeral ns
-fromRomanNumeral ('L':ns)     =   50 + fromRomanNumeral ns
-fromRomanNumeral ('C':'D':ns) =  400 + fromRomanNumeral ns
-fromRomanNumeral ('C':'M':ns) =  400 + fromRomanNumeral ns
-fromRomanNumeral ('C':ns)     =  100 + fromRomanNumeral ns
-fromRomanNumeral ('D':ns)     =  500 + fromRomanNumeral ns
-fromRomanNumeral ('M':ns)     = 1000 + fromRomanNumeral ns
+fromRomanNumerals :: String -> Int
+fromRomanNumerals "" = 0
+fromRomanNumerals ('I':'V':ns) =    4 + fromRomanNumerals ns
+fromRomanNumerals ('I':'X':ns) =    9 + fromRomanNumerals ns
+fromRomanNumerals ('V':ns)     =    5 + fromRomanNumerals ns
+fromRomanNumerals ('I':ns)     =    1 + fromRomanNumerals ns
+fromRomanNumerals ('X':'L':ns) =   40 + fromRomanNumerals ns
+fromRomanNumerals ('X':'C':ns) =   90 + fromRomanNumerals ns
+fromRomanNumerals ('X':ns)     =   10 + fromRomanNumerals ns
+fromRomanNumerals ('L':ns)     =   50 + fromRomanNumerals ns
+fromRomanNumerals ('C':'D':ns) =  400 + fromRomanNumerals ns
+fromRomanNumerals ('C':'M':ns) =  400 + fromRomanNumerals ns
+fromRomanNumerals ('C':ns)     =  100 + fromRomanNumerals ns
+fromRomanNumerals ('D':ns)     =  500 + fromRomanNumerals ns
+fromRomanNumerals ('M':ns)     = 1000 + fromRomanNumerals ns
 
 toMinimalRomanNumeral :: Int -> String
 toMinimalRomanNumeral = undefined
@@ -28,4 +28,5 @@ toMinimalRomanNumeral = undefined
 main = do
     content <- readFile "input/roman.txt"
     let ls = lines content
-    mapM_ print $ map fromRomanNumeral ls
+    let ns = map fromRomanNumerals ls
+    mapM_ print $ ns
