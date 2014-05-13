@@ -9,17 +9,19 @@
 import ProjectEuler
 
 squareDigits :: Int -> Int
-squareDigits n = sum . map (\x -> x * x) $ digits n
+squareDigits = sum . map (\x -> x * x) . digits
 
-takeUntil :: (a -> Bool) -> [a] -> [a]
-takeUntil _ [] = []
-takeUntil p (x:xs) = x
-                   : if not $ p x
-                     then takeUntil p xs
-                     else []
+allSquareDigits :: [Int]
+allSquareDigits = map squareDigits [0..]
 
-main = print . sum $ map ((\x -> if x == 89 then 1 else 0) . last) chains
-    where chain = takeUntil (\x -> x == 1 || x == 89)
-                        . iterate squareDigits
-          chains = map chain [2..n]
-          n = 100000
+squareDigitsChain :: Int -> [Int]
+squareDigitsChain n = n : squareDigitsChain (allSquareDigits !! n)
+
+chainEnds :: [Int]
+chainEnds = [c' n | n <- [1..]]
+    where c'  1 = 1
+          c' 89 = 89
+          c'  n = chainEnds !! ((squareDigits  n) - 1)
+
+main = print . sum . map (\x -> if x == 89 then 1 else 0) $ take n chainEnds
+    where n = 10000000
