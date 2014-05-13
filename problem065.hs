@@ -9,12 +9,13 @@
 import Data.Ratio
 import Test.HUnit.Base (Test(..), (~:), (~=?))
 import Test.HUnit.Text (runTestTT)
+import ProjectEuler
 
 continuedFraction :: Double -> [Int]
 continuedFraction x = n : continuedFraction (1 / (x - fromIntegral n))
     where n = floor x
 
-eContinuedFraction :: [Int]
+eContinuedFraction :: [Integer]
 eContinuedFraction = 2 : 1 : 2 : [e' n | n <- [3..]]
     where e' n | n `mod` 3 == 2 = (eContinuedFraction !! (n - 3)) + 2
                | otherwise = 1
@@ -24,7 +25,7 @@ testEContinuedFraction = "Test eContinuedFraction" ~: expected ~=? actual
     where expected = [2, 1, 2, 1, 1, 4, 1, 1, 6, 1, 1, 8, 1, 1, 10, 1, 1, 12, 1, 1, 14, 1, 1, 16, 1]
           actual   = take 25 eContinuedFraction
 
-convergent :: [Int] -> Ratio Int
+convergent :: [Integer] -> Ratio Integer
 convergent (x:[]) = x % 1
 convergent (x:xs) = x % 1 + 1 / convergent' xs
     where convergent' (x:[]) = x % 1
@@ -43,4 +44,4 @@ allTests = "Test Problem 65"
 
 runTests = runTestTT allTests
 
-main = print . take 10 $ map (\n -> convergent $ take n eContinuedFraction) [1..] 
+main = print . sum . digits . numerator . head . drop 99 $ map (\n -> convergent $ take n eContinuedFraction) [1..] 
