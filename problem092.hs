@@ -11,12 +11,6 @@ import ProjectEuler
 squareDigits :: Int -> Int
 squareDigits = sum . map (\x -> x * x) . digits
 
-allSquareDigits :: [Int]
-allSquareDigits = map squareDigits [0..]
-
-squareDigitsChain :: Int -> [Int]
-squareDigitsChain n = n : squareDigitsChain (allSquareDigits !! n)
-
 chainEnds :: [Int]
 chainEnds = [c' n | n <- [1..]]
     where c'  1 = 1
