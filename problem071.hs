@@ -6,4 +6,13 @@
 
 -- Problem 71
 
-main = undefined
+import Control.Applicative
+import Data.List
+import Data.Ratio
+
+fractions d = map (%d) [1..d-1]
+
+justLessThan f d = ((numerator f * d - 1) `div` denominator f) % d
+
+main = print . last . sort $ map (justLessThan (3%7)) [2..d]
+    where d = 1000000
