@@ -6,4 +6,8 @@
 
 -- Problem 65
 
-main = undefined
+continuedFraction :: Double -> [Int]
+continuedFraction x = n : continuedFraction (1 / (x - fromIntegral n))
+    where n = floor x
+
+main = print . take 25 . continuedFraction $ sqrt 2 
