@@ -6,4 +6,15 @@
 
 -- Problem 63
 
-main = undefined
+digitCount :: Integer -> Integer
+digitCount n = 1 + (floor $ logBase 10 n')
+    where n' = fromIntegral n :: Double
+
+nthPowers :: Integer -> [Integer]
+nthPowers n = map (^n) [1..9]
+
+nDigitNthPowers :: Integer -> [Integer]
+nDigitNthPowers n = takeWhile (\k -> digitCount k == n) . dropWhile (\k -> digitCount k < n) $ nthPowers n
+
+main = print . length . concat $ map nDigitNthPowers [1..n]
+    where n = 300
