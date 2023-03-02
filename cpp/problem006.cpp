@@ -1,43 +1,41 @@
 /*
- * 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
- *
- * What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
- */
+The sum of the squares of the first ten natural numbers is,
+
+1^2 + 2^2 + ... + 10^2 = 385
+The square of the sum of the first ten natural numbers is,
+
+(1 + 2 + ... + 10)^2 = 55^2 = 3025
+Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is 3025  385 = 2640.
+
+Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
+*/
 
 #include <iostream>
 
-/*
- * Calculate the Greatest Common Divisor of two numbers using the Euclidean Algorithm.
- */
 template <class T>
-T gcd(T m, T n);
+T sumOfSquares(T n);
 
-/*
- * Calculate the Least Common Multiple of two numbers.
- */
 template <class T>
-T lcm(T m, T n);
+T squareOfSum(T n);
 
 int main() {
-  unsigned long l = 1;
+  long n = 100;
 
-  for (unsigned long i = 1; i <= 20; ++i) {
-    l = lcm(i, l);
+  long sq = squareOfSum(n);
+  long sum = sumOfSquares(n);
 
-    std::cout << l << std::endl;
-  }
+  std::cout << sq << " " << sum << " " << sq - sum << std::endl;
 
   return 0;
 }
 
 template <class T>
-T gcd(T m, T n) {
-  if (n % m == 0) return m;
-
-  return gcd(n % m, m);
+T sumOfSquares(T n) {
+  return n * (n + 1) * (2 * n + 1) / 6;
 }
 
 template <class T>
-T lcm(T m, T n) {
-  return m / gcd(m, n) * n;
+T squareOfSum(T n) {
+  int sum = n * (n + 1) / 2;
+  return sum * sum;
 }
