@@ -18,5 +18,5 @@ int main() {
 
   std::cout << total << std::endl;
  
- return 0;
+  return 0;
 }
