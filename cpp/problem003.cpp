@@ -1,62 +1,109 @@
 /*
  * Project Euler
- * Problem 28
+ * Problem 3
  *
- * Starting with the number 1 and moving to the right in a clockwise direction a 5 by 5 spiral is formed as follows:
+ * The prime factors of 13195 are 5, 7, 13 and 29.
  *
- * *21*  22   23   24  *25*
- *  20  * 7*   8  * 9*  10
- *  19    6  * 1*   2   11
- *  18  * 5*   4  * 3*  12
- * *17*  16   15   14  *13*
- * 
- * It can be verified that the sum of the numbers on the diagonals is 101.
- *
- * What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed in the same way?
+ * What is the largest prime factor of the number 600851475143 ?
  */
 
 #include <iostream>
+#include <list>
+#include <cmath>
 
-int spiralDiagonals(int n);
-int negDiag(int n);
-int posDiag(int n);
-int sumN(int n);
+/*
+ * Prints any container which supports forward iterators.
+ */
+template <class T>
+void print(T t);
+
+/*
+ * Generates a list of all primes less than n using the Sieve of Eratosthenes.
+ */
+template <class T>
+std::list<T> primeFactors(T n);
+
+template <class T>
+std::list<T> primes(T n);
 
 int main() {
-  int n = 5;
-
-  std::cout << spiralDiagonals(n) << std::endl;
+  const long n = 73033; // 199 * 367
+//  std::list<long> pf = primeFactors(n);
+  std::list<int> pf = primeFactors(100);
+  print(pf);
 
   return 0;
 }
 
-int spiralDiagonals(int n) {
-  std::cout << negDiag(n) << " + " << posDiag(n) << std::endl;
+template <class T>
+void print(T t) {
+  typename T::iterator itr = t.begin();
+  
+  std::cout << "[";
 
-  return negDiag(n) + posDiag(n) - 1;
+  if (itr != t.end()) {
+    std::cout << *itr;
+    ++itr;
+  }
+
+  for(; itr != t.end(); ++itr) {
+    std::cout << ", " << *itr;
+
+  }
+
+  std::cout << "]";
 }
 
-int negDiag(int n) {
-  std::cout << "negDiag(" << n << ")" << std::endl;
+template <class T>
+std::list<T> primeFactors(T n) {
+  std::list<T> pr = primes(n);
+  std::list<T> pf;
 
-  if (n == 1) return 1;
+  for (typename std::list<T>::iterator itr = pr.begin(); itr != pr.end(); ++itr) {
+    if (n % *itr == 0) {
+      pf.push_back(*itr);
+    }
+  }
 
-  std::cout << 4 * sumN(n - 2) + 2 * n << std::endl;
-
-  return negDiag(n - 2) + 4 * sumN(n - 2) + 2 * n;
+  return pf;
 }
 
-int posDiag(int n) {
-  std::cout << "posDiag(" << n << ")" << std::endl;
+template <class T>
+std::list<T> primes(T n) {
+  std::list<T> nums;
 
-  if (n == 1) return 1;
+  for (T i = 2; i <= n; ++i) {
+    nums.push_back(i);
+  }
 
-  std::cout << 8 * sumN(n - 2) + 4 * n - 2 << std::endl;
+  std::list<T> pr;
 
-  return posDiag(n - 2) + 8 * sumN(n - 2) + 4 * n - 2;
+  T sqrtN = static_cast<T>(std::sqrt(n));
+  T minPrime = *nums.begin();
+
+  while (minPrime <= sqrtN) {
+    pr.push_back(minPrime);
+    std::cout << "pr:";
+    print(pr);
+    std::cout << std::endl;
+
+    for (T i = minPrime; i <= n; i += minPrime) {
+      typename std::list<T>::iterator itr = std::find(nums.begin(), nums.end(), i);
+
+      if (itr != nums.end()) {
+//        std::cout << "Removing " << *itr << std::endl;
+        nums.erase(itr);
+      }
+    }
+
+    minPrime = *nums.begin();
+  }
+
+  pr.insert(pr.end(), nums.begin(), nums.end());
+
+  std::cout << "pr:";
+  print(pr);
+  std::cout << std::endl;
+
+  return pr;
 }
-
-int sumN(int n) {
-  return n * (n + 1) / 2;
-}
-
