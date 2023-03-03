@@ -9,8 +9,8 @@
 import Data.Bits (xor)
 import Data.Char (isSpace, ord, chr, isAlpha)
 import Data.List (sortBy)
+import Data.List.Split (splitOn)
 import System.IO (openFile, hGetContents, hClose, IOMode(ReadMode))
-import ProjectEuler (split)
 
 letterCount :: [Int] -> Int
 letterCount = length . filter (isAlpha . chr)
@@ -33,9 +33,9 @@ sumAscii :: String -> Integer
 sumAscii s = sum $ map (fromIntegral . ord) s
 
 main = do
-  hCrypt <- openFile "input/cipher1.txt" ReadMode
+  hCrypt <- openFile "../input/cipher1.txt" ReadMode
   cryptContents <- hGetContents hCrypt
-  let cryptAscii = map read . split ',' $ trim cryptContents
+  let cryptAscii = map read . splitOn "," $ trim cryptContents
       keys = [map ord [x, y, z] | x <- cs, y <- cs, z <- cs]
         where cs = ['a'..'z']
       plainAscii = map (flip encrypt cryptAscii) keys
