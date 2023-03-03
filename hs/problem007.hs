@@ -8,5 +8,5 @@
 
 import ProjectEuler(primes)
 
-main = print $ primes n !! 10000
+main = print $ primes !! 10000
     where n = 2000000
