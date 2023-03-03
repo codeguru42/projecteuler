@@ -7,7 +7,8 @@
 -- Problem 42
 
 import System.IO (openFile, hGetContents, hClose, IOMode(ReadMode))
-import ProjectEuler (wordScore, split, removeChar)
+import Data.List.Split (splitOn)
+import ProjectEuler (wordScore, removeChar)
 
 triangle :: Integer -> Integer
 triangle n = n * (n + 1) `div` 2
@@ -27,5 +28,5 @@ isTriangleWord = isTriangleNumber . wordScore
 main = do
     handle <- openFile "../input/words.txt" ReadMode
     contents <- hGetContents handle
-    print (length (filter isTriangleWord (map (removeChar '"') (split ',' contents))))
+    print (length (filter isTriangleWord (map (removeChar '"') (splitOn "," contents))))
     hClose handle
