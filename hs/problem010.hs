@@ -10,4 +10,4 @@ import ProjectEuler (primes)
 
 -- TOOD Takes too long
 main = print (sum (takeWhile (<n) primes))
-	where n = 2000000
+    where n = 2000000
