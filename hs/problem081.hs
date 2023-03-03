@@ -27,7 +27,7 @@ minSumPath xss i j = minSumPath' !! i !! j
             where x = xss !! i !! j
 
 main = do
-    contents <- readFile "input/matrix.txt"
+    contents <- readFile "../input/matrix.txt"
     let xss = map (read <$>) . map (splitOn ",") $ lines contents :: [[Int]]
     mapM_ print xss
     print $ length xss

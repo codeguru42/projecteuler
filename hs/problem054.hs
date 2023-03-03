@@ -197,7 +197,7 @@ win :: [Card] -> [Card] -> Bool
 win h1 h2 = rank h1 > rank h2
 
 main = do
-    handle <- openFile "input/poker.txt" ReadMode
+    handle <- openFile "../input/poker.txt" ReadMode
     contents <- hGetContents handle
     let rawCards = map words (lines contents)
     let cards = map (map toCard) rawCards

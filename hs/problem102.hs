@@ -56,7 +56,7 @@ contains t p = whichSide p s1 == whichSide v3 s1
         v3 = c t
 
 main = do
-  contents <- readFile "input/triangles.txt"
+  contents <- readFile "../input/triangles.txt"
   let coords = map (map read) (map (splitOn ",") (lines contents))
   let triangles = map (\(a:b:c:[]) -> Triangle a b c) (map makePoints coords)
   let Just containsCount =

@@ -25,7 +25,7 @@ isTriangleWord :: String -> Bool
 isTriangleWord = isTriangleNumber . wordScore
 
 main = do
-    handle <- openFile "input/words.txt" ReadMode
+    handle <- openFile "../input/words.txt" ReadMode
     contents <- hGetContents handle
     print (length (filter isTriangleWord (map (removeChar '"') (split ',' contents))))
     hClose handle

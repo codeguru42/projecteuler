@@ -52,7 +52,7 @@ toMinimalRomanNumerals n = ths ++ hs ++ ts ++ os
                       else replicate ones 'I'
 
 main = do
-    content <- readFile "input/roman.txt"
+    content <- readFile "../input/roman.txt"
     let ls = lines content
     let ns = map fromRomanNumerals ls
     let rs = map toMinimalRomanNumerals ns
