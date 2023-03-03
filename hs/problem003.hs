@@ -9,4 +9,4 @@
 import ProjectEuler
 
 main = print (head (reverse (filter isPrime (divisors n))))
-	where n = 600851475143
+    where n = 600851475143
