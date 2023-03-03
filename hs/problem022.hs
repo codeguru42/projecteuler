@@ -8,12 +8,13 @@
 
 import System.IO(openFile, hGetContents, hClose, IOMode(ReadMode))
 import Data.List(sort)
-import ProjectEuler(wordScore, split, removeChar)
+import Data.List.Split (splitOn)
+import ProjectEuler(wordScore, removeChar)
 
 main = do 
-    handle <- openFile "input/names.txt" ReadMode 
+    handle <- openFile "../input/names.txt" ReadMode 
     contents <- hGetContents handle 
-    let names = sort (map (removeChar '"') (split ',' contents)) 
+    let names = sort (map (removeChar '"') (splitOn "," contents))
     let nameScores = zipWith (*) [1..] (map wordScore names)
     print (sum nameScores)
     hClose handle 
