@@ -2,3 +2,5 @@
 *.hi
 *.o
 *.prof
+
+**/.idea
