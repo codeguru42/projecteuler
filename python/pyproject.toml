@@ -10,6 +10,7 @@ package-mode = false
 python = "^3.12"
 black = "^24.10.0"
 networkx = "^3.4.2"
+matplotlib = "^3.9.3"
 
 
 [build-system]
